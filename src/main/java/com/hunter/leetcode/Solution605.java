@@ -28,8 +28,6 @@ package com.hunter.leetcode;
 //
 // Related Topics 数组
 
-import java.util.Deque;
-import java.util.LinkedList;
 
 /**
  * @description:
@@ -44,47 +42,22 @@ public class Solution605 {
             return false;
         }
 
-        Deque<Integer> deque = new LinkedList<>();
         int count = 0;
-        boolean firstFlag = true;
 
         for (int i = 0; i< flowerbed.length; ++i) {
-            if(deque.size() < 3) {
-                deque.offerLast(flowerbed[i]);
-            } else {
 
-                if(deque.size() == 3 && deque.peekFirst() == 0 && firstFlag) {
-                    deque.pollFirst();
-                    if (deque.peekFirst() == 0) {
-                        count++;
-                    }
-                    firstFlag = false;
-                    continue;
-                }
-
-                if (deque.peekFirst() == 0 && deque.peekLast() == 0) {
-                    deque.pollFirst();
-                    if (deque.peekFirst() == 0) {
-                        count++;
-                        deque.pollFirst();
-                        deque.offerFirst(1);
-                    } else {
-                        deque.pollFirst();
-                    }
-                    deque.offerLast(flowerbed[i]);
-                } else {
-                    deque.pollFirst();
-                    deque.offerLast(flowerbed[i]);
-                }
-
+            if (flowerbed[i] == 0 && (i==0 || flowerbed[i-1]==0) &&
+                    (i == flowerbed.length -1 || flowerbed[i+1] == 0)) {
+                count++;
+                flowerbed[i] = 1;
             }
-        }
 
+        }
         return count >= n;
     }
 
     public static void main(String[] args) {
-        System.out.println(canPlaceFlowers(new int[]{0,0,1,0,0}, 1));
+        System.out.println(canPlaceFlowers(new int[]{0,0,1,0,0}, 2));
     }
 
 }
