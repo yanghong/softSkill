@@ -42,31 +42,31 @@ public class Solution34 {
                 break;
             }
             if (nums[mid] == target) {
-                if (mid - 1 > 0 ){
-                    if (nums[mid - 1] == target) {
-                        result[0] = mid - 1;
+
+                int midTemp = mid;
+                // 往start找
+                while (mid >= start) {
+                    if (nums[mid] == target) {
+                        result[0] = mid;
+                    }
+                    if (mid != 0 && nums[mid - 1] == target) {
+                        mid = mid - 1;
+                        result[0] = mid;
+                    }
+                    mid = mid - 1;
+                }
+
+                mid = midTemp;
+                // 往end找
+                while (mid <= end) {
+                    if (nums[mid] == target) {
                         result[1] = mid;
                     }
-                }
-                if (mid - 1 == -1) {
-                    result[0] = mid;
-                    result[1] = mid;
-                    if (nums[mid + 1] == target) {
-                        result[1] = mid + 1;
+                    if (mid != nums.length - 1 && nums[mid + 1] == target) {
+                        mid = mid + 1;
+                        result[1] = mid;
                     }
-                }
-                if (mid + 1 < nums.length) {
-                    if (nums[mid + 1] == target) {
-                        result[0] = mid;
-                        result[1] = mid + 1;
-                    }
-                }
-                if (mid + 1 == nums.length) {
-                    result[0] = mid;
-                    if (nums[mid - 1] == target) {
-                        result[0] = mid - 1;
-                    }
-                    result[1] = mid;
+                    mid = mid + 1;
                 }
                 break;
             }
@@ -82,7 +82,7 @@ public class Solution34 {
     }
 
     public static void main(String[] args) {
-        System.out.println(searchRange(new int[]{}, 8));
+        System.out.println(searchRange(new int[]{8,8,8,8,8}, 8));
     }
 
 }
