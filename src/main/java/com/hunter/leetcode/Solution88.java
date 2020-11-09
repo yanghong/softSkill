@@ -36,7 +36,7 @@ package com.hunter.leetcode;
 /**
  * @author hunter.yang
  * @version 1.0
- * @description null
+ * @description 88 合并两个有序数组
  * @date 2020/11/4 21:30
  */
 public class Solution88 {
