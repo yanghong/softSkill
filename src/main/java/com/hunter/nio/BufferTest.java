@@ -88,6 +88,12 @@ public class BufferTest {
             drainBuffer(buffer);
             buffer.clear();
         }
+
+        // 复制缓冲区
+        CharBuffer charBuffer = CharBuffer.allocate(8);
+        charBuffer.position(3).limit(6).mark().position(5);
+        CharBuffer dupeBuffer = charBuffer.duplicate();
+        charBuffer.clear();
     }
 
 }
