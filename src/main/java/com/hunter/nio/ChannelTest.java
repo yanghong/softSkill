@@ -27,9 +27,12 @@ public class ChannelTest {
     public static void main(String[] args) throws Exception{
         SocketChannel sc = SocketChannel.open( );
         sc.connect (new InetSocketAddress ("somehost", 1000));
+
         ServerSocketChannel ssc = ServerSocketChannel.open( );
         ssc.socket( ).bind (new InetSocketAddress(1000));
+
         DatagramChannel dc = DatagramChannel.open( );
+
         RandomAccessFile raf = new RandomAccessFile ("somefile", "r");
         FileChannel fc = raf.getChannel( );
     }
