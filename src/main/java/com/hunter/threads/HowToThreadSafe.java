@@ -9,4 +9,7 @@ package com.hunter.threads;
 public class HowToThreadSafe {
 
 
+    public static void main(String[] args) {
+
+    }
 }
