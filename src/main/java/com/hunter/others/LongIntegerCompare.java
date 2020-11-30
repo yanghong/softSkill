@@ -25,6 +25,15 @@ public class LongIntegerCompare {
         Map<Long, Long> idMap = JSON.parseObject(conf, new TypeReference<Map<Long, Long>>(){});
 
         System.out.println(idMap);
+        Long id = 8L;
+        System.out.println(id);
+        sout(id);
+        System.out.println(id);
+
+    }
+
+    private static void sout(Long id) {
+        System.out.println(++id);
     }
 
 }
