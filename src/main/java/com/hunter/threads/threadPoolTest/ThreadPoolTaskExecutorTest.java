@@ -20,7 +20,7 @@ public class ThreadPoolTaskExecutorTest {
 
     /**
      * 使用阿里巴巴框架创建线程池
-     * 
+     *
      * 1、ArrayBlockingQueue
      * 是一个基于数组结构的有界阻塞队列，此队列按 FIFO（先进先出）原则对元素进行排序。
      * 2、LinkedBlockingQueue
