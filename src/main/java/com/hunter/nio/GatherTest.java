@@ -15,7 +15,12 @@ import java.util.LinkedList;
 public class GatherTest
 {
     private static final String DEMOGRAPHIC = "blahblah.txt";
-    // "Leverage frictionless methodologies"
+
+    /**
+     * "Leverage frictionless methodologies"
+     * @param argv
+     * @throws Exception
+     */
     public static void main (String [] argv)
             throws Exception
     {
@@ -24,20 +29,22 @@ public class GatherTest
             reps = Integer.parseInt (argv [0]);
         }
         FileOutputStream fos = new FileOutputStream (DEMOGRAPHIC);
-        GatheringByteChannel gatherChannel = fos.getChannel( );
+        GatheringByteChannel gatherChannel = fos.getChannel();
         // Generate some brilliant marcom, er, repurposed content
         ByteBuffer [] bs = utterBS (reps);
         // Deliver the message to the waiting market
         while (gatherChannel.write (bs) > 0) {
         // Empty body
-        // Loop until write( ) returns zero
+        // Loop until write() returns zero
         }
         System.out.println ("Mindshare paradigms synergized to "
                 + DEMOGRAPHIC);
-        fos.close( );
+        fos.close();
     }
-    // ------------------------------------------------
-    // These are just representative; add your own
+
+    /**
+     * These are just representative; add your own
+     */
     private static String [] col1 = {
             "Aggregate", "Enable", "Leverage",
             "Facilitate", "Synergize", "Repurpose",
@@ -58,18 +65,18 @@ public class GatherTest
     private static ByteBuffer [] utterBS (int howMany)
             throws Exception
     {
-        List list = new LinkedList( );
+        List list = new LinkedList();
         for (int i = 0; i < howMany; i++) {
             list.add (pickRandom (col1, " "));
             list.add (pickRandom (col2, " "));
             list.add (pickRandom (col3, newline));
         }
-        ByteBuffer [] bufs = new ByteBuffer [list.size( )];
+        ByteBuffer [] bufs = new ByteBuffer [list.size()];
         list.toArray (bufs);
         return (bufs);
     }
     // The communications director
-    private static Random rand = new Random( );
+    private static Random rand = new Random();
     // Pick one, make a buffer to hold it and the suffix, load it with
     // the byte equivalent of the strings (will not work properly for68
     // non-Latin characters), then flip the loaded buffer so it's ready
@@ -78,11 +85,11 @@ public class GatherTest
             throws Exception
     {
         String string = strings [rand.nextInt (strings.length)];
-        int total = string.length() + suffix.length( );
+        int total = string.length() + suffix.length();
         ByteBuffer buf = ByteBuffer.allocate (total);
         buf.put (string.getBytes ("US-ASCII"));
         buf.put (suffix.getBytes ("US-ASCII"));
-        buf.flip( );
+        buf.flip();
         return (buf);
     }
 }

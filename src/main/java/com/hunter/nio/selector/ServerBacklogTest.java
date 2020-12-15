@@ -9,7 +9,7 @@ import java.nio.channels.ServerSocketChannel;
 /**
  * @author hunter.yang
  * @version 1.0
- * @description null
+ * @description 检测bind函数的backlog参数
  * @date 2020/12/11 22:48
  */
 public class ServerBacklogTest {
