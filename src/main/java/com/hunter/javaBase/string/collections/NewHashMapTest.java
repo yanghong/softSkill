@@ -10,7 +10,7 @@ import java.util.Map;
  * @description use guava
  * @date 2020/12/15 11:36
  */
-public class newHashMapTest {
+public class NewHashMapTest {
 
     public static void main(String[] args) {
         Map<Long, String> map = Maps.newHashMap();
