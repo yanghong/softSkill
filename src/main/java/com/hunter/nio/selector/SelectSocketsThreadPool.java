@@ -38,7 +38,7 @@ public class SelectSocketsThreadPool extends SelectorSocketsTest {
     }
 
     private class ThreadPool {
-        List idle = new LinkedList();
+        final LinkedList<WorkerThread> idle = new LinkedList();
         ThreadPool(int poolSize) {
             // Fill up the pool with worker threads
             for (int i = 0; i < poolSize; i++) {
