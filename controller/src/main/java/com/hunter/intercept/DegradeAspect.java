@@ -1,4 +1,4 @@
-package com.hunter.spring.intercept;
+package com.hunter.intercept;
 
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -20,7 +20,7 @@ import java.lang.reflect.Method;
 @Slf4j
 public class DegradeAspect {
 
-    @Around(value = "@annotation(com.hunter.spring.intercept.DegradeAnnotation)")
+    @Around(value = "@annotation(com.hunter.intercept.DegradeAnnotation)")
     public Object process(ProceedingJoinPoint joinPoint) {
 
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();

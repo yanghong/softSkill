@@ -1,4 +1,4 @@
-package com.hunter.javaBase.string;
+package com.hunter.string;
 
 import com.alibaba.ttl.threadpool.TtlExecutors;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;

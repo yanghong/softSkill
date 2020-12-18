@@ -1,6 +1,5 @@
-package com.hunter.javaBase.string.JDKAndCGlib;
+package com.hunter.string.JDKAndCGlib;
 
-import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Proxy;
 
 /**

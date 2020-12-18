@@ -1,4 +1,4 @@
-package com.hunter.spring.intercept;
+package com.hunter.intercept;
 
 import java.lang.annotation.*;
 

@@ -1,4 +1,4 @@
-package com.hunter.javaBase.string.collections;
+package com.hunter.string.collections;
 
 import com.google.common.collect.Maps;
 

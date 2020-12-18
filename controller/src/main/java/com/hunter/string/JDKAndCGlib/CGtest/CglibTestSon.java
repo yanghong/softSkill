@@ -1,4 +1,4 @@
-package com.hunter.javaBase.string.JDKAndCGlib.CGtest;
+package com.hunter.string.JDKAndCGlib.CGtest;
 
 /**
  * @author hunter.yang
