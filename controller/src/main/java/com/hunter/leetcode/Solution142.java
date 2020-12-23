@@ -68,9 +68,7 @@ package com.hunter.leetcode;
  *         next = null;
  *     }
  * }
- */
-
-/**
+ *
  * @author hunter.yang
  * @version 1.0
  * @description null
@@ -88,8 +86,6 @@ public class Solution142 {
 
     public ListNode detectCycle(ListNode head) {
 
-        ListNode listNode = new ListNode(1);
-
-        return listNode;
+        return new ListNode(1);
     }
 }
