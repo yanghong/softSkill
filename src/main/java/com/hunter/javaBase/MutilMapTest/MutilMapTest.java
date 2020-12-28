@@ -30,27 +30,41 @@ public class MutilMapTest {
 
     public static void main(String[] args) {
 
-        String str = "[{\n" +
-                "    \"period\": 1,\n" +
-                "    \"withdrawTimes\": 1,\n" +
-                "    \"duringTime\": 1,\n" +
-                "    \"sellerUid\": 1,\n" +
-                "    \"withdrawRates\": {\n" +
-                "    0:{\n" +
-                "    15:[0.3,0.4,0.3],\n" +
-                "    0:[0.1,0.2,0.7]}\n" +
+        String str = "[\n" +
+                "    {\n" +
+                "        \"period\": 15,\n" +
+                "        \"withdrawTimes\": 2,\n" +
+                "        \"everyWithdrawTimeMap\": {\n" +
+                "            \"1\": 15,\n" +
+                "            \"2\": 15\n" +
+                "        },\n" +
+                "        \"sellerUid\": 125238901,\n" +
+                "        \"withdrawRates\": {\n" +
+                "            \"0\": {\n" +
+                "\t\t\t\"15\": [\n" +
+                "                    0,\n" +
+                "                    1\n" +
+                "                ],\n" +
+                "\t\t\t\t\n" +
+                "                \"0\": [\n" +
+                "                    0.8,\n" +
+                "                    0.2\n" +
+                "                ]\n" +
+                "                \n" +
+                "            }\n" +
+                "        }\n" +
                 "    }\n" +
-                "  }]";
+                "]";
 
         List<KaSellerModel> kaSellerWithdrawRates = JSON.parseObject(str, new TypeReference<List<KaSellerModel>>(){});
-//
-//        System.out.println(kaSellerWithdrawRates);
-//
-//        System.out.println(findMatchSplitRule(kaSellerWithdrawRates.get(0).getWithdrawRates(), 15.0));
-//
-//        System.out.println(JSON.toJSONString(inKaSellerConf(1L)));
 
-        System.out.println(System.currentTimeMillis() / 1000L + 8 * 24 * 3600);
+//        System.out.println(kaSellerWithdrawRates);
+
+        System.out.println(findMatchSplitRule(kaSellerWithdrawRates.get(0).getWithdrawRates(), 16.0));
+
+        System.out.println(JSON.toJSONString(inKaSellerConf(125238901L)));
+
+//        System.out.println(System.currentTimeMillis() / 1000L + 8 * 24 * 3600);
 
     }
 
