@@ -68,7 +68,7 @@ public class ThreadPoolTaskExecutorTest {
         /**
          * AbortPolicy() 直接抛出拒绝异常
          * CallerRunsPolicy 如果线程池未关闭，则会在调用者线程中执行新任务，这回导致主线程提交线程性能变慢。
-         * DiscardPolicy 不处理新任务，即丢弃。
+         * DiscardPolicy 不处理新任务，即丢弃。直接丢弃
          * DiscardOldestPolicy 抛弃最老的任务，就是从队列取出最老的任务然后放入新的任务进行执行。
          */
         threadPool.setRejectedExecutionHandler(new ThreadPoolExecutor.AbortPolicy());
