@@ -49,8 +49,8 @@ public class MaterialTest {
         MaterialClassicSaveLinkReq saveLinkReq = new MaterialClassicSaveLinkReq();
 
         saveLinkReq.setJson("[{\"type\":2,\"pid\":\"\",\"uid\":137795157,\"bid\":13205,\"isFeatured\":false},{\"type\":2,\"pid\":\"\",\"uid\":127588226,\"bid\":7283,\"isFeatured\":false},{\"type\":2,\"pid\":\"\",\"uid\":126658955,\"bid\":12091,\"isFeatured\":false},{\"type\":2,\"pid\":\"\",\"uid\":129176404,\"bid\":11192,\"isFeatured\":false},{\"type\":2,\"pid\":\"\",\"uid\":139147812,\"bid\":6887,\"isFeatured\":false},{\"type\":2,\"pid\":\"\",\"uid\":138126273,\"bid\":24074,\"isFeatured\":false},{\"type\":2,\"pid\":\"\",\"uid\":128132074,\"bid\":28128,\"isFeatured\":false},{\"type\":2,\"pid\":\"\",\"uid\":126222849,\"bid\":13816,\"isFeatured\":false},{\"type\":1,\"pid\":\"17921553\",\"uid\":\"\",\"bid\":\"\",\"isFeatured\":false}]");
-        saveLinkReq.setFirstCategoryId(11);
-        saveLinkReq.setSecCategoryId(1100);
+        saveLinkReq.setFirstCategoryId(14);
+        saveLinkReq.setSecCategoryId(1400);
 
 
         if (StringUtils.isNotBlank(conf)) {
@@ -61,12 +61,14 @@ public class MaterialTest {
             MaterialClassicHotSaleVO materialClassicHotSaleVO = confs.stream().filter(b -> saveLinkReq.getFirstCategoryId().equals(b.getCategoryId())).findAny().orElse(null);
             if (null == materialClassicHotSaleVO) {
                 System.out.println("此一级类目下没有匹配数据");
+                return;
             }
             List<MaterialClassicSubCategory> subCategories = materialClassicHotSaleVO.getSubCategories();
             if (CollectionUtils.isNotEmpty(subCategories)) {
                 MaterialClassicSubCategory subCategory = subCategories.stream().filter(a -> saveLinkReq.getSecCategoryId().equals(a.getCategoryIdSec())).findAny().orElse(null);
                 if (null == subCategory) {
                     System.out.println("没有匹配此二级类目的数据");
+                    return;
                 }
                 List<MaterialClassicPidOrBrandLinkArticle> adds = JSON.parseObject(saveLinkReq.getJson(), new TypeReference<List<MaterialClassicPidOrBrandLinkArticle>>() {
                 });
