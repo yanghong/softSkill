@@ -1,7 +1,5 @@
-package com.hunter.pattern_design.muti_thread;
+package com.hunter.threads.muti_thread;
 
-
-import org.apache.commons.logging.Log;
 
 /**
  * @author hunter.yang
