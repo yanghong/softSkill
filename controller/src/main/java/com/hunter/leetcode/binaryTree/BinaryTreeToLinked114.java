@@ -67,6 +67,11 @@ package com.hunter.leetcode.binaryTree;
  * }
  */
 
+import org.apache.poi.ss.formula.functions.T;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author hunter.yang
  * @version 1.0
@@ -75,7 +80,7 @@ package com.hunter.leetcode.binaryTree;
  */
 public class BinaryTreeToLinked114 {
 
-    public class TreeNode {
+    public static class TreeNode {
         int val;
         TreeNode left;
         TreeNode right;
@@ -88,6 +93,56 @@ public class BinaryTreeToLinked114 {
         }
     }
 
+    public static void flatten(TreeNode root) {
 
+        if (null == root) {
+            return;
+        }
+
+        List<Integer> result = new ArrayList<>();
+
+        changeNode(result, root);
+
+        TreeNode tmp = null;
+        for (Integer item : result) {
+            TreeNode treeNode = new TreeNode(item);
+            treeNode.left = null;
+            if (null == tmp) {
+                root = treeNode;
+                tmp = treeNode;
+            }
+            tmp.right = treeNode;
+            tmp = tmp.right;
+        }
+    }
+
+    public static void changeNode(List<Integer> result, TreeNode root) {
+
+        if (null != root) {
+
+            result.add(root.val);
+
+            if (null != root.left) {
+                changeNode(result, root.left);
+            }
+
+            if (null != root.right) {
+                changeNode(result, root.right);
+            }
+        }
+
+    }
+
+    public static void main(String[] args) {
+
+        TreeNode treeNode4 = new TreeNode(3, null, null);
+        TreeNode treeNode5 = new TreeNode(4, null, null);
+        TreeNode treeNode7 = new TreeNode(6, null, null);
+        TreeNode treeNode2 = new TreeNode(2, treeNode4, treeNode5);
+        TreeNode treeNode3 = new TreeNode(5, null, treeNode7);
+        TreeNode treeNode1 = new TreeNode(1, treeNode2, treeNode3);
+
+        flatten(treeNode1);
+    }
 
 }
