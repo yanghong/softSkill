@@ -143,6 +143,7 @@ public class BinaryTreeToLinked114 {
         TreeNode treeNode1 = new TreeNode(1, treeNode2, treeNode3);
 
         flatten(treeNode1);
+        System.out.println(treeNode1);
     }
 
 }
