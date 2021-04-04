@@ -49,6 +49,4 @@ public class BinaryTree114Next {
         flatten(treeNode1);
         System.out.println(treeNode1);
     }
-
-
 }
