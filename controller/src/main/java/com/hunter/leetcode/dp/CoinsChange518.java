@@ -47,6 +47,7 @@ public class CoinsChange518 {
 
     public static int change(int amount, int[] coins) {
 
+        // 背包问题，这里的j就代表amount，dp[j]代表
         int[] dp = new int[amount + 1];
 
         dp[0] = 1;
@@ -64,8 +65,8 @@ public class CoinsChange518 {
 
     public static void main(String[] args) {
 
-        int[] coins = {10};
-        int amount = 10;
+        int[] coins = {1,2,5};
+        int amount = 5;
         int result = change(amount, coins);
         System.out.println(result);
 
