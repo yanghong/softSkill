@@ -1,4 +1,4 @@
-package com.hunter.leetcode;
+package com.hunter.leetcode.binaryTree;
 
 //给定一个二叉树，找出其最小深度。
 //
@@ -33,17 +33,10 @@ package com.hunter.leetcode;
 // Related Topics 树 深度优先搜索 广度优先搜索
 // 👍 515 👎 0
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * @author yanghong
  */
 public class BinaryTreeMinDepth111 {
-
-    private static Set<Integer> hashset = new HashSet<>();
-
-    private static Integer levelCount = Integer.MAX_VALUE;
 
     public static class TreeNode {
         int val;
@@ -62,38 +55,19 @@ public class BinaryTreeMinDepth111 {
         if (null == root) {
             return 0;
         }
-        int count = 1;
+        if (root.right == null && root.left == null) {
+            return 1;
+        }
+
+        int minDep = Integer.MAX_VALUE;
         if (null != root.left) {
-            levelSearch(root.left, count);
+            minDep = minDepth(root.left);
         }
         if (null != root.right) {
-            levelSearch(root.right, count);
+            minDep = minDepth(root.right);
         }
 
-        for (Integer i : hashset) {
-            if (i <= levelCount) {
-                levelCount = i;
-            }
-        }
-
-        return levelCount;
-    }
-
-    private static int levelSearch(TreeNode root, int levelCount) {
-
-        levelCount++;
-        if (null != root.left) {
-            levelCount = levelSearch(root.left, levelCount);
-        }
-        if (null != root.right) {
-            levelCount = levelSearch(root.right, levelCount);
-        }
-        if (null == root.left && null == root.right) {
-            hashset.add(levelCount);
-        }
-
-        return levelCount;
-
+        return minDep + 1;
     }
 
     public static void main(String[] args) {
