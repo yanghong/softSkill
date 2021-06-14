@@ -13,8 +13,8 @@ public class GeneratorSqlTest {
         StringBuilder result = new StringBuilder();
 
         String name = "dws_prod_dws_2m_m";
-        String indicator = "[{\"name\":\"crt_trd_cnt_1d\",\"type\":\"bigint\",\"COMMENT\":\"最近一天下单交易数\"}]";
-        String dimension = "[{\"name\":\"hr\",\"type\":\"bigint\",\"COMMENT\":\"小时分区\"},{\"name\":\"pt\",\"type\":\"bigint\",\"COMMENT\":\"日期分区\"}]";
+        String indicator = "[{\"name\":\"crt_trd_cnt_1d\",\"type\":\"bigint\",\"COMMENT\":\"最近一天下单交易数\",\"partition\":false}]";
+        String dimension = "[{\"name\":\"hr\",\"type\":\"bigint\",\"COMMENT\":\"小时分区\",\"partition\":true},{\"name\":\"pt\",\"type\":\"bigint\",\"COMMENT\":\"日期分区\",\"partition\":true}]";
         String tableComment = "测试一下";
         String storeType = "TEXTFILE";
         String fields = "32432";
@@ -50,15 +50,19 @@ public class GeneratorSqlTest {
         result.append("PARTITIONED BY (");
         if (null != dimArr) {
             for (int i = 0; i < dimArr.size(); i++) {
-                result.append(dimArr.get(i).getName()).append(" ");
-                result.append(dimArr.get(i).getType()).append(" ");
-                result.append("COMMENT \"");
-                result.append(dimArr.get(i).getComment()).append("\"");
-                if (i != dimArr.size() - 1) {
-                    result.append(",");
+                assert dataArr != null;
+                if (dataArr.get(i).partition) {
+                    result.append(dimArr.get(i).getName()).append(" ");
+                    result.append(dimArr.get(i).getType()).append(" ");
+                    result.append("COMMENT \"");
+                    result.append(dimArr.get(i).getComment()).append("\"");
+                    if (i != dimArr.size() - 1) {
+                        result.append(",");
+                    }
                 }
             }
         }
+        result.append(")");
         result.append("\n");
         result.append("ROW FORMAT DELIMITED").append("\n");
 
@@ -97,6 +101,7 @@ public class GeneratorSqlTest {
         private String name;
         private String type;
         private String comment;
+        private boolean partition;
 
         public String getName() {
             return name;
@@ -120,6 +125,14 @@ public class GeneratorSqlTest {
 
         public void setType(String type) {
             this.type = type;
+        }
+
+        public boolean isPartition() {
+            return partition;
+        }
+
+        public void setPartition(boolean partition) {
+            this.partition = partition;
         }
     }
 
@@ -128,6 +141,7 @@ public class GeneratorSqlTest {
         private String name;
         private String type;
         private String comment;
+        private boolean partition;
 
         public String getName() {
             return name;
@@ -152,6 +166,14 @@ public class GeneratorSqlTest {
 
         public void setType(String type) {
             this.type = type;
+        }
+
+        public boolean isPartition() {
+            return partition;
+        }
+
+        public void setPartition(boolean partition) {
+            this.partition = partition;
         }
     }
 }

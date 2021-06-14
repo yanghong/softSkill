@@ -1,10 +1,16 @@
 package com.hunter.BizTest;
 
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.xmlbeans.impl.xb.xsdschema.PatternDocument;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author yanghong
@@ -51,21 +57,23 @@ public class EncodeSqlTest {
         String indicatorMaterial = indicatorSpilt[0];
         String[] indicatorList = indicatorMaterial.split(",");
         for (String i : indicatorList) {
-            System.out.println(i);
-            indicator = indicator + i;
+            indicator = indicator + i.replace("\n", "") + ",";
         }
 
-        String otherMaterial = indicatorSpilt[1];
+        indicator = parseIndicator(indicator);
+        String otherPart = sqlSplit[1].split("\\)")[1];
+
+        String otherMaterial = otherPart + sqlSplit[2];
         String[] otherList = otherMaterial.split("\n");
         for (String s : otherList) {
             if (s.startsWith("COMMENT")) {
                 tableComment = s.split(" ")[1];
             }
             if (s.startsWith("PARTITIONED BY")) {
-                dimension = s;
+                dimension = parseDimension(s);
             }
             if (s.startsWith("STORED AS")) {
-                storeType = s.replace("STORED AS", "");
+                storeType = s.replace("STORED AS ", "");
             }
             if (s.startsWith("FIELDS TERMINATED BY")) {
                 fields = s.replace("FIELDS TERMINATED BY ", "");
@@ -91,6 +99,47 @@ public class EncodeSqlTest {
         System.out.println("collection: " + collection);
         System.out.println("mapKey: " + mapKey);
 
+    }
+
+    private static String parseDimension(String dimension) {
+        GeneratorSqlTest.Dimension dim = new GeneratorSqlTest.Dimension();
+        dimension = dimension.replaceAll("PARTITIONED BY ", "").replace("COMMENT ", "").replace(")","");
+        String[] dimList = dimension.split(",");
+
+        for (String d : dimList) {
+            String[] dList = d.split(" ");
+            dim.setName(dList[0]);
+            dim.setType(dList[1]);
+            dim.setComment(dList[2].replace("\"",""));
+            dim.setPartition(true);
+        }
+        return JSON.toJSONString(dim);
+    }
+
+    private static String parseIndicator(String indicator) {
+
+        List<GeneratorSqlTest.Indicator> indicators = new ArrayList<>();
+        // pt    bigint    COMMENT "日期分区"    ,hr    bigint    COMMENT "小时分区"    ,crt_trd_cnt_1d    bigint    COMMENT "最近一天下单交易数",
+        String[] indicatorList = indicator.split(",");
+        for (String i : indicatorList) {
+            if (StringUtils.isNotBlank(i)) {
+                GeneratorSqlTest.Indicator indicator1 = new GeneratorSqlTest.Indicator();
+                i = i.replace("COMMENT", "").trim();
+
+                Pattern p = Pattern.compile("\\s+");
+                Matcher m = p.matcher(i);
+                i= m.replaceAll(" ");
+
+                String[] iList = i.split(" ");
+                indicator1.setName(iList[0].trim());
+                indicator1.setType(iList[1].trim());
+                indicator1.setComment(iList[2].trim().replace("\"", ""));
+                indicator1.setPartition(false);
+                indicators.add(indicator1);
+            }
+        }
+
+        return JSON.toJSONString(indicators);
     }
 
 
