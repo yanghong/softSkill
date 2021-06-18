@@ -1,6 +1,7 @@
 package com.hunter.BizTest;
 
 import com.alibaba.fastjson.JSONArray;
+import com.google.common.collect.Lists;
 
 import java.util.List;
 
@@ -12,22 +13,40 @@ public class GeneratorSqlTest {
     public static void main(String[] args) {
         StringBuilder result = new StringBuilder();
 
-        String name = "dws_prod_dws_2m_m";
-        String indicator = "[{\"name\":\"crt_trd_cnt_1d\",\"type\":\"bigint\",\"COMMENT\":\"最近一天下单交易数\",\"partition\":false}]";
-        String dimension = "[{\"name\":\"hr\",\"type\":\"bigint\",\"COMMENT\":\"小时分区\",\"partition\":true},{\"name\":\"pt\",\"type\":\"bigint\",\"COMMENT\":\"日期分区\",\"partition\":true}]";
-        String tableComment = "测试一下";
-        String storeType = "TEXTFILE";
-        String fields = "32432";
-        String lines = "2332";
-        String collection = "111";
-        String mapKey = "555";
+        String name = "datax_asas";
+        String indicator = "[{\"name\":\"test_crt_ord_cnt_1d\",\"type\":\"string\",\"COMMENT\":\"测\",\"partition\":false}]";
+        String dimension = "[{\"name\":\"1_437_336_336\",\"type\":\"double\",\"COMMENT\":\"测\",\"partition\":true},{\"name\":\"tttt\",\"type\":\"double\",\"COMMENT\":\"测\",\"partition\":false}]";
+        String tableComment = "c";
+        String storeType = "textfile";
+        String fields = "1";
+        String lines = "1";
+        String collection = "1";
+        String mapKey = "1";
 
         // 表名
         String[] nameList = name.split("_");
         result.append("create table if not exists ").append(nameList[0]).append(".").append(name).append("\n");
         result.append("(").append("\n");
-        // 添加派生指标、原子指标等
+
+        List<Dimension> dimArr = JSONArray.parseArray(dimension, Dimension.class);
         List<Indicator> dataArr = JSONArray.parseArray(indicator, Indicator.class);
+
+        List<Dimension> partitionedDimArr = Lists.newArrayList();
+
+        for (Dimension dim : dimArr) {
+            if (!dim.isPartition()) {
+                Indicator in = new Indicator();
+                in.setComment(dim.getComment());
+                in.setName(dim.getName());
+                in.setPartition(dim.isPartition());
+                in.setType(dim.getType());
+                dataArr.add(in);
+            } else {
+                partitionedDimArr.add(dim);
+            }
+        }
+        // 添加派生指标、原子指标等
+
         if (null != dataArr) {
             for (int i = 0; i < dataArr.size(); i++) {
                 result.append("\t");
@@ -46,17 +65,15 @@ public class GeneratorSqlTest {
         result.append("COMMENT \"").append(tableComment).append("\"\n");
 
         // 维度  PARTITIONED BY (pt  COMMENT "日期分区",hr  COMMENT "小时分区")
-        List<Dimension> dimArr = JSONArray.parseArray(dimension, Dimension.class);
         result.append("PARTITIONED BY (");
-        if (null != dimArr) {
-            for (int i = 0; i < dimArr.size(); i++) {
-                assert dataArr != null;
-                if (dataArr.get(i).partition) {
-                    result.append(dimArr.get(i).getName()).append(" ");
-                    result.append(dimArr.get(i).getType()).append(" ");
+        if (partitionedDimArr.size() > 0) {
+            for (int i = 0; i < partitionedDimArr.size(); i++) {
+                if (partitionedDimArr.get(i).isPartition()) {
+                    result.append(partitionedDimArr.get(i).getName()).append(" ");
+                    result.append(partitionedDimArr.get(i).getType()).append(" ");
                     result.append("COMMENT \"");
-                    result.append(dimArr.get(i).getComment()).append("\"");
-                    if (i != dimArr.size() - 1) {
+                    result.append(partitionedDimArr.get(i).getComment()).append("\"");
+                    if (i != partitionedDimArr.size() - 1) {
                         result.append(",");
                     }
                 }
@@ -94,7 +111,9 @@ public class GeneratorSqlTest {
         }
         result.append(";");
 
-        System.out.println(result.toString());
+        String resultStr = result.toString().replaceAll("\n", "<br/>");
+
+        System.out.println(resultStr);
     }
 
     static class Indicator{
