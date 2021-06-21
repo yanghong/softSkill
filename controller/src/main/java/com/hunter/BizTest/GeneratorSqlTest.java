@@ -55,7 +55,7 @@ public class GeneratorSqlTest {
                 result.append("COMMENT \"");
                 result.append(dataArr.get(i).getComment()).append("\"");
                 if (i != dataArr.size() - 1) {
-                    result.append(",");
+                    result.append(",\n");
                 }
             }
         }
