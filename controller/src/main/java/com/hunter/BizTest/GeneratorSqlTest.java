@@ -83,24 +83,34 @@ public class GeneratorSqlTest {
         result.append("\n");
         result.append("ROW FORMAT DELIMITED").append("\n");
 
+        boolean flag = false;
+
         // 字段分隔符  FIELDS TERMINATED BY "12"
         if (null != fields) {
+            flag = true;
             result.append("FIELDS TERMINATED BY \"").append(fields).append("\"\n");
         }
 
         // 行分隔符  LINES TERMINATED BY "43"
         if (null != lines) {
+            flag = true;
             result.append("LINES TERMINATED BY \"").append(lines).append("\"\n");
         }
 
         // 集合分隔符  COLLECTION ITEMS TERMINATED BY "453"
         if (null != collection) {
+            flag = true;
             result.append("COLLECTION ITEMS TERMINATED BY \"").append(collection).append("\"\n");
         }
 
         // MAPKEY分隔符   MAP KEYS TERMINATED BY "6665"
         if (null != mapKey) {
+            flag = true;
             result.append("MAP KEYS TERMINATED BY \"").append(mapKey).append("\"\n");
+        }
+
+        if (!flag) {
+            result = new StringBuilder(result.toString().replace("ROW FORMAT DELIMITED\n", ""));
         }
 
         // 存储格式
